@@ -1,9 +1,9 @@
 package cigar.club.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import cigar.club.backend.models.enums.Color;
+import cigar.club.backend.models.enums.Strength;
+import cigar.club.backend.models.enums.Type;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,24 +21,41 @@ public class Cigar {
 
     private String barCode;
     private String admCode;
+
     private String name;
     private String brandName;
+
     private String description;
-    private String manufacturer;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand manufacturer;
+
     private String origin;
+
     private Strength strength;
     private String wrapper;
     private Color wrapperColor;
+
     private String binder;
     private String filler;
+
     private String masterLine;
     private String rollingType;
+
     private String shape;
+
     private Double price;
-    private Rating rating;
+
+    private Double rating;
+
     private Integer numberInABox;
+
     private Integer ring;
+
     private Integer smokingTime;
+
+    private Type type;
 
 
 

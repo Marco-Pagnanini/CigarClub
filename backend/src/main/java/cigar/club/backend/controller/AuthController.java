@@ -15,27 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
+    
     @Autowired
     private AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        AuthResponse registerResponse = authService.register(request);
-        if (registerResponse == null) {
-            return ResponseEntity.badRequest().body("Email già presente");
+        try{
+            AuthResponse reponse = authService.register(request);
+            return ResponseEntity.ok(reponse);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok(registerResponse);
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        AuthResponse loginRequest = authService.login(request);
-        if(loginRequest == null) {
-            return ResponseEntity.badRequest().body(loginRequest);
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try{
+            AuthResponse authResponse = authService.login(request);
+            return ResponseEntity.ok(authResponse);
         }
-        return ResponseEntity.ok(loginRequest);
+        catch(RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/refresh")

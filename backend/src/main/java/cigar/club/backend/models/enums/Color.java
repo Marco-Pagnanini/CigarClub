@@ -1,4 +1,4 @@
-package cigar.club.backend.models;
+package cigar.club.backend.models.enums;
 
 
 public enum Color {

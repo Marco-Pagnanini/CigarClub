@@ -43,10 +43,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("Credenziali non valide"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED,
-                    "Credenziali non valide"
-            );
+            throw new IllegalArgumentException("Credenziali non valide");
 
         }
 
@@ -59,11 +56,7 @@ public class AuthService {
     // Registrazione
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED,
-                    "Credenziali errore"
-            );
-
+            throw new IllegalArgumentException("Email already exists");
         }
 
         User user = new User();
